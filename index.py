@@ -1,8 +1,8 @@
-import os
-import tempfile
 import streamlit as st
-from app.loaders import pdf_loader
+from app.load_and_chunk_file import load_and_chunk_file
+from app.pdf_handler import pdf_handler
 import cryptography
+
 
 st.markdown("<h1 style='text-align: center;'>Study Mate</h1>", unsafe_allow_html=True)
 
@@ -15,9 +15,15 @@ with st.chat_message("bot"):
 
 
 uploaded_file = st.sidebar.file_uploader("file",type="pdf")
+
 if uploaded_file:
-    with tempfile.NamedTemporaryFile(delete=False,suffix=".pdf") as tmp:
-        tmp.write(uploaded_file.read())
-        tmp_path = tmp.name
-        pdf_loader(tmp_path)
+    st.sidebar.success(f"Uploaded {uploaded_file.name}")
+file,submit = pdf_handler(uploaded_file)
+
+if file and submit:
+    with st.spinner("Indexing PDF..."):
+        chunk = load_and_chunk_file(file)
+        st.success("PDF indexed successfully")
+
+
 
