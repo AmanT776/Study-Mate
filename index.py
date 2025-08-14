@@ -1,6 +1,7 @@
 import streamlit as st
 from app.load_and_chunk_file import load_and_chunk_file
 from app.pdf_handler import pdf_handler
+from app.vector_store import vector_store
 import cryptography
 
 
@@ -23,6 +24,7 @@ file,submit = pdf_handler(uploaded_file)
 if file and submit:
     with st.spinner("Indexing PDF..."):
         chunk = load_and_chunk_file(file)
+        vector_store(chunk)
         st.success("PDF indexed successfully")
 
 

@@ -1,0 +1,140 @@
+[
+    {
+        "label": "PyPDFLoader",
+        "importPath": "langchain_community.document_loaders",
+        "description": "langchain_community.document_loaders",
+        "isExtraImport": true,
+        "detail": "langchain_community.document_loaders",
+        "documentation": {}
+    },
+    {
+        "label": "RecursiveCharacterTextSplitter",
+        "importPath": "langchain_text_splitters",
+        "description": "langchain_text_splitters",
+        "isExtraImport": true,
+        "detail": "langchain_text_splitters",
+        "documentation": {}
+    },
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_community.embeddings",
+        "description": "langchain_community.embeddings",
+        "isExtraImport": true,
+        "detail": "langchain_community.embeddings",
+        "documentation": {}
+    },
+    {
+        "label": "load_and_chunk_file",
+        "importPath": "app.load_and_chunk_file",
+        "description": "app.load_and_chunk_file",
+        "isExtraImport": true,
+        "detail": "app.load_and_chunk_file",
+        "documentation": {}
+    },
+    {
+        "label": "pdf_handler",
+        "importPath": "app.pdf_handler",
+        "description": "app.pdf_handler",
+        "isExtraImport": true,
+        "detail": "app.pdf_handler",
+        "documentation": {}
+    },
+    {
+        "label": "vector_store",
+        "importPath": "app.vector_store",
+        "description": "app.vector_store",
+        "isExtraImport": true,
+        "detail": "app.vector_store",
+        "documentation": {}
+    },
+    {
+        "label": "cryptography",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cryptography",
+        "description": "cryptography",
+        "detail": "cryptography",
+        "documentation": {}
+    },
+    {
+        "label": "load_and_chunk_file",
+        "kind": 2,
+        "importPath": "app.load_and_chunk_file",
+        "description": "app.load_and_chunk_file",
+        "peekOfCode": "def load_and_chunk_file(file):\n    loader = PyPDFLoader(file)\n    pdf_content = loader.load()\n    chunks = chunk(pdf_content)\n    return chunks\ndef chunk(pdf_docs):\n    text_splitter = RecursiveCharacterTextSplitter(\n        chunk_size=1000,\n        chunk_overlap=100,\n    )",
+        "detail": "app.load_and_chunk_file",
+        "documentation": {}
+    },
+    {
+        "label": "chunk",
+        "kind": 2,
+        "importPath": "app.load_and_chunk_file",
+        "description": "app.load_and_chunk_file",
+        "peekOfCode": "def chunk(pdf_docs):\n    text_splitter = RecursiveCharacterTextSplitter(\n        chunk_size=1000,\n        chunk_overlap=100,\n    )\n    texts = text_splitter.create_documents([doc.page_content for doc in pdf_docs])\n    return texts",
+        "detail": "app.load_and_chunk_file",
+        "documentation": {}
+    },
+    {
+        "label": "pdf_handler",
+        "kind": 2,
+        "importPath": "app.pdf_handler",
+        "description": "app.pdf_handler",
+        "peekOfCode": "def pdf_handler(uploaded_file):\n    submit = st.sidebar.button(\"submit to db\", key=\"submit_pdf\") \n    file = None\n    if uploaded_file:\n        with tempfile.NamedTemporaryFile(delete=False, suffix=\".pdf\") as tmp:\n            tmp.write(uploaded_file.read())\n            file = tmp.name\n    return file, submit",
+        "detail": "app.pdf_handler",
+        "documentation": {}
+    },
+    {
+        "label": "vector_store",
+        "kind": 2,
+        "importPath": "app.vector_store",
+        "description": "app.vector_store",
+        "peekOfCode": "def vector_store(chunk):\n    hf = HuggingFaceEmbeddings(\n        model_name = \"sentence-transformers/all-mpnet-base-v2\",\n        model_kwargs={\"device\": \"cpu\"}\n    )\n    texts = [doc.page_content for doc in chunk]\n    embedding_vectors = hf.embed_documents(texts)\n    print(embedding_vectors)",
+        "detail": "app.vector_store",
+        "documentation": {}
+    },
+    {
+        "label": "user_input",
+        "kind": 5,
+        "importPath": "index",
+        "description": "index",
+        "peekOfCode": "user_input = st.chat_input(\"user\")\nwith st.chat_message(\"user\"):\n    st.write(user_input)\nwith st.chat_message(\"bot\"):\n    st.write(\"how are you\")\nuploaded_file = st.sidebar.file_uploader(\"file\",type=\"pdf\")\nif uploaded_file:\n    st.sidebar.success(f\"Uploaded {uploaded_file.name}\")\nfile,submit = pdf_handler(uploaded_file)\nif file and submit:",
+        "detail": "index",
+        "documentation": {}
+    },
+    {
+        "label": "uploaded_file",
+        "kind": 5,
+        "importPath": "index",
+        "description": "index",
+        "peekOfCode": "uploaded_file = st.sidebar.file_uploader(\"file\",type=\"pdf\")\nif uploaded_file:\n    st.sidebar.success(f\"Uploaded {uploaded_file.name}\")\nfile,submit = pdf_handler(uploaded_file)\nif file and submit:\n    with st.spinner(\"Indexing PDF...\"):\n        chunk = load_and_chunk_file(file)\n        vector_store(chunk)\n        st.success(\"PDF indexed successfully\")",
+        "detail": "index",
+        "documentation": {}
+    },
+    {
+        "label": "file,submit",
+        "kind": 5,
+        "importPath": "index",
+        "description": "index",
+        "peekOfCode": "file,submit = pdf_handler(uploaded_file)\nif file and submit:\n    with st.spinner(\"Indexing PDF...\"):\n        chunk = load_and_chunk_file(file)\n        vector_store(chunk)\n        st.success(\"PDF indexed successfully\")",
+        "detail": "index",
+        "documentation": {}
+    }
+]

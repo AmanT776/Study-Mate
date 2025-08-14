@@ -6,10 +6,11 @@ def load_and_chunk_file(file):
     pdf_content = loader.load()
     chunks = chunk(pdf_content)
     return chunks
-def chunk(pdf):
+
+def chunk(pdf_docs):
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size = 1000,
-        chunk_overlap = 100,
+        chunk_size=1000,
+        chunk_overlap=100,
     )
-    texts = text_splitter.create_documents([doc.page_content for doc in pdf])
+    texts = text_splitter.create_documents([doc.page_content for doc in pdf_docs])
     return texts
