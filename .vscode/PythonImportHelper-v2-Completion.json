@@ -42,6 +42,14 @@
         "documentation": {}
     },
     {
+        "label": "Chroma",
+        "importPath": "langchain_chroma",
+        "description": "langchain_chroma",
+        "isExtraImport": true,
+        "detail": "langchain_chroma",
+        "documentation": {}
+    },
+    {
         "label": "load_and_chunk_file",
         "importPath": "app.load_and_chunk_file",
         "description": "app.load_and_chunk_file",
@@ -106,7 +114,7 @@
         "kind": 2,
         "importPath": "app.vector_store",
         "description": "app.vector_store",
-        "peekOfCode": "def vector_store(chunk):\n    hf = HuggingFaceEmbeddings(\n        model_name = \"sentence-transformers/all-mpnet-base-v2\",\n        model_kwargs={\"device\": \"cpu\"}\n    )\n    texts = [doc.page_content for doc in chunk]\n    embedding_vectors = hf.embed_documents(texts)\n    print(embedding_vectors)",
+        "peekOfCode": "def vector_store(chunk):\n    hf = HuggingFaceEmbeddings(\n        model_name = \"sentence-transformers/all-mpnet-base-v2\",\n        model_kwargs={\"device\": \"cpu\"}\n    )\n    texts = [doc.page_content for doc in chunk]\n    # pdf_vectors = hf.embed_documents(texts)\n    pdf_store = Chroma(\n        collection_name = \"pdf_db\",\n        embedding_function=hf,",
         "detail": "app.vector_store",
         "documentation": {}
     },
