@@ -5,7 +5,7 @@ from langchain.retrievers import ContextualCompressionRetriever
 from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 
-env = load_dotenv()
+env = load_dotenv() #load environment variables
 def create_rag_chain(retriever: ContextualCompressionRetriever):
     llm = ChatGroq(
         temperature=0.3,
